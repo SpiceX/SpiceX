@@ -559,7 +559,7 @@ function build_redis {
 	fi
 	echo -n "[REDIS] downloading $REDIS_VERSION..."
 	download_file "https://github.com/phpredis/phpredis/archive/$REDIS_VERSION.tar.gz" | tar -zx >> "$DIR/install.log" 2>&1
-	mv redis-$REDIS_VERSION redis
+	mv phpredis-$REDIS_VERSION redis
 	cd redis
 	./bootstrap >> "$DIR/install.log" 2>&1
 
