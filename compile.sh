@@ -561,19 +561,13 @@ function build_redis {
 	download_file "https://github.com/phpredis/phpredis/archive/phpredis-$REDIS_VERSION.tar.gz" | tar -zx >> "$DIR/install.log" 2>&1
 	mv phpredis-$REDIS_VERSION redis
 	cd redis
-	./bootstrap >> "$DIR/install.log" 2>&1
-
-	echo -n " checking..."
-
-	RANLIB=$RANLIB ./configure \
-	--prefix="$DIR/bin/php7" \
-	$EXTRA_FLAGS \
-	$CONFIGURE_FLAGS >> "$DIR/install.log" 2>&1
-	sed -i=".backup" 's/ tests win32/ win32/g' Makefile
+	$DIR/bin/php7/bin/phpize >> "$DIR/install.log" 2>&1
+	./configure --with-php-config="$DIR/bin/php7/bin/php-config --enable-redis" >> "$DIR/install.log" 2>&1
 	echo -n " compiling..."
-	make -j $THREADS all >> "$DIR/install.log" 2>&1
+	make -j4 >> "$DIR/install.log" 2>&1
 	echo -n " installing..."
 	make install >> "$DIR/install.log" 2>&1
+	echo "extension=redis.so" >> "$DIR/bin/php7/bin/php.ini"
 	cd ..
 	echo " done!"
 }
@@ -754,6 +748,8 @@ build_gmp
 build_openssl
 build_curl
 build_yaml
+build_redis
+
 if [ "$COMPILE_LEVELDB" == "yes" ]; then
 	build_leveldb
 fi
@@ -818,7 +814,7 @@ get_github_extension "pthreads" "$EXT_PTHREADS_VERSION" "pmmp" "pthreads" #"v" n
 
 get_github_extension "yaml" "$EXT_YAML_VERSION" "php" "pecl-file_formats-yaml"
 
-get_pecl_extension "redis" "$REDIS_VERSION" "phpredis" "ext-redis"
+get_pecl_extension "redis" "$REDIS_VERSION" "redis" "ext-redis"
 
 get_github_extension "igbinary" "$EXT_IGBINARY_VERSION" "igbinary" "igbinary"
 
