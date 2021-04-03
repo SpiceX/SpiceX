@@ -558,7 +558,7 @@ function build_redis {
 		local EXTRA_FLAGS="--enable-shared --disable-static"
 	fi
 	echo -n "[REDIS] downloading $REDIS_VERSION..."
-	download_file "https://github.com/phpredis/phpredis/archive/phpredis-$REDIS_VERSION.tar.gz" | tar -zx >> "$DIR/install.log" 2>&1
+	download_file "https://github.com/phpredis/phpredis/archive/refs/tags/5.3.4.tar.gz" | tar -zxvf >> "$DIR/install.log" 2>&1
 	mv phpredis-$REDIS_VERSION redis
 	cd redis
 	$DIR/bin/php7/bin/phpize >> "$DIR/install.log" 2>&1
