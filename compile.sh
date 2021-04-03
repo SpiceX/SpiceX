@@ -558,7 +558,7 @@ function build_redis {
 		local EXTRA_FLAGS="--enable-shared --disable-static"
 	fi
 	echo -n "[REDIS] downloading $REDIS_VERSION..."
-	download_file "https://github.com/phpredis/phpredis/archive/$REDIS_VERSION.tar.gz" | tar -zx >> "$DIR/install.log" 2>&1
+	download_file "https://github.com/phpredis/phpredis/archive/phpredis-$REDIS_VERSION.tar.gz" | tar -zx >> "$DIR/install.log" 2>&1
 	mv phpredis-$REDIS_VERSION redis
 	cd redis
 	./bootstrap >> "$DIR/install.log" 2>&1
@@ -819,7 +819,7 @@ get_github_extension "pthreads" "$EXT_PTHREADS_VERSION" "pmmp" "pthreads" #"v" n
 
 get_github_extension "yaml" "$EXT_YAML_VERSION" "php" "pecl-file_formats-yaml"
 
-get_pecl_extension "redis" "$REDIS_VERSION"
+get_pecl_extension "redis" "$REDIS_VERSION" "phpredis" "ext-redis"
 
 get_github_extension "igbinary" "$EXT_IGBINARY_VERSION" "igbinary" "igbinary"
 
