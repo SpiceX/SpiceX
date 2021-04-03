@@ -754,7 +754,6 @@ build_gmp
 build_openssl
 build_curl
 build_yaml
-build_redis
 if [ "$COMPILE_LEVELDB" == "yes" ]; then
 	build_leveldb
 fi
